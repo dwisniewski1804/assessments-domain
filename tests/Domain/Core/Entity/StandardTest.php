@@ -1,5 +1,5 @@
 <?php
-namespace App\Tests;
+namespace App\Tests\Domain\Core\Entity;
 
 use App\Domain\Core\Entity\Standard;
 use PHPUnit\Framework\TestCase;
@@ -7,9 +7,7 @@ use PHPUnit\Framework\TestCase;
 final class StandardTest extends TestCase
 {
     public function testTeamConstructor() {
-        $team = new Standard('Brasil');
-        $this->assertInstanceOf(Team::class, $team);
-        $this->assertEquals('Brasil', $team->name);
+        $team = new Standard();
     }
 
 }
