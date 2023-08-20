@@ -1,0 +1,32 @@
+{
+    "name": "damian/assessments-ddd-domain-only",
+    "description": "Domain for assessing process.",
+    "type": "application",
+    "require-dev": {
+        "phpunit/phpunit": "^10.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Damian",
+            "email": "contact@dwisniewski.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "doctrine/collections": "^2.1"
+    },
+    "scripts": {
+        "run-tests": "./vendor/bin/phpunit tests"
+    }
+}
