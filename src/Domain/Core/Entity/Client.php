@@ -2,12 +2,31 @@
 
 namespace App\Domain\Core\Entity;
 
+use App\Domain\Shared\ValueObjects\Uuid;
+
 class Client
 {
+    private readonly Uuid $id;
     private array $assessments;
     private array $contracts;
 
-    public function hasActiveContractWith(Supervisor $supervisor) {
+    public function __construct(Uuid $id)
+    {
+        $this->id = $id;
+        $this->contracts = [];
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function addContract(Contract $contract) {
+        $this->contracts[] = $contract;
+    }
+
+    public function hasActiveContractWith(Supervisor $supervisor): bool
+    {
         /**
          * @var Contract $contract
          */
@@ -20,18 +39,14 @@ class Client
         return false;
     }
 
-    public function hasActiveAssessmentFor(Standard $standard): bool {
-        // if we had collection object here we could use filter/find function
-        foreach ($this->assessments as $assessment) {
-            if ($assessment->standard === $standard && $assessment->isExpired()) {
-                return true;
-            }
-        }
+    public function addAssessment(Assessment $assessment): self {
+        $this->assessments[$assessment->getStandard()->getId()->__toString()] = $assessment;
 
-        return false;
+        return $this;
     }
 
-    public function addAssessment(Assessment $assessment) {
-        $this->assessments[] = $assessment;
+    public function countAssessments(): int
+    {
+        return count($this->assessments);
     }
 }
