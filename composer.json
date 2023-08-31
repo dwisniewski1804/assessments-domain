@@ -27,6 +27,8 @@
         "doctrine/collections": "^2.1"
     },
     "scripts": {
-        "run-tests": "./vendor/bin/phpunit tests"
+        "run-tests": "./vendor/bin/phpunit tests",
+        "run-fixer": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src",
+        "run-fixer-tests": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests"
     }
 }

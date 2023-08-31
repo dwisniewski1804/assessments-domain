@@ -10,6 +10,6 @@ class CanNotEvaluateDueToTimeAfterRulesException extends DomainException
 
     public function __construct(int $negativeTime, int $positiveTime)
     {
-        parent::__construct(printf($this->message, $negativeTime, $positiveTime));
+        parent::__construct(sprintf($this->message, $negativeTime, $positiveTime));
     }
 }
