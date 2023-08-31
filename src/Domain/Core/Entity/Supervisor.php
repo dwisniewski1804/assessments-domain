@@ -24,4 +24,10 @@ class Supervisor
 
         return $this;
     }
+
+    public function removeAuthorityFor(Standard $standard): self
+    {
+        unset($this->authorities[$standard->getId()->__toString()]);
+        return $this;
+    }
 }

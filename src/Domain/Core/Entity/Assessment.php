@@ -24,8 +24,6 @@ class Assessment
     private Standard $standard;
     private Rating $rating;
     private readonly \DateTimeImmutable $date;
-
-    // TODO instead lock property we should have separated model for LockedAssessment or even WithdrawnAssessment and SuspendedAssessment classes
     private ?Lock $lock = null;
 
     const EXPIRATION_DAYS = 365;
@@ -46,6 +44,7 @@ class Assessment
         $this->client = $client;
         $this->standard = $standard;
         $this->date = $date->getDateTime();
+        $this->client->addAssessment($this);
     }
 
     public function lock(LockType $type, string $description): self {
@@ -87,10 +86,11 @@ class Assessment
         }
 
         $this->rating = $rating;
+        // Add assessment can be called since active assessment will be replaced
         $this->client->addAssessment($this);
     }
 
-    private function canEvaluateAfter() {
+    private function canEvaluateAfter(): \DateTimeImmutable {
         if (isset($this->rating)) {
             if ($this->rating->isPositive()) {
                 return (clone $this->date)->modify('+' . self::POSITIVE_DAYS . ' days');
@@ -98,7 +98,7 @@ class Assessment
             return (clone $this->date)->modify('+'. self::NEGATIVE_DAYS .' days');
         }
 
-        return new \DateTime();
+        return new \DateTimeImmutable();
     }
 
     public function isExpired(): bool {

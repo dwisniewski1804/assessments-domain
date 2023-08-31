@@ -2,6 +2,7 @@
 
 namespace App\Domain\Core\Entity;
 
+use App\Domain\Core\Exception\CanNotAddContractForOtherClientException;
 use App\Domain\Shared\ValueObjects\Uuid;
 
 class Client
@@ -14,6 +15,7 @@ class Client
     {
         $this->id = $id;
         $this->contracts = [];
+        $this->assessments = [];
     }
 
     public function getId(): Uuid
@@ -22,6 +24,9 @@ class Client
     }
 
     public function addContract(Contract $contract) {
+        if ($contract->client->getId() !== $this->id) {
+            throw new CanNotAddContractForOtherClientException();
+        }
         $this->contracts[] = $contract;
     }
 
@@ -48,5 +53,10 @@ class Client
     public function countAssessments(): int
     {
         return count($this->assessments);
+    }
+
+    public function countContracts(): int
+    {
+        return count($this->contracts);
     }
 }
