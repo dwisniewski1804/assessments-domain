@@ -44,3 +44,9 @@ composer run run-tests
 composer run run-fixer
 ```
 
+## Final clues 
+
+1. If I had more to to model it I would consider to create factories for the tests fot minimize the number of code.
+2. PHP CS fixer would be defined with my own rules if the requirements would have them.
+3. I should have start from unit tests and write in TDD but after the first iteration I already created code and did not have time to start over.
+4. I tried to cover all the requirements but I would need to task with an expert to resolve some questions that appeared during the implementation. 
