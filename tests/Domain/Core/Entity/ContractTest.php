@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Domain\Core\Entity;
 
 use App\Domain\Core\Entity\Client;
@@ -18,7 +19,8 @@ final class ContractTest extends TestCase
         $this->idGenerator = new IdGenerator();
     }
 
-    public function testContractConstruct() {
+    public function testContractConstruct()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());

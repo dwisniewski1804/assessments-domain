@@ -9,7 +9,8 @@ class Lock
     private LockType $type;
     private string $description;
 
-    public function __construct(LockType $type, string $description) {
+    public function __construct(LockType $type, string $description)
+    {
         $this->type = $type;
         $this->description = $description;
     }

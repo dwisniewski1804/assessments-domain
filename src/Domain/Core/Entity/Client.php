@@ -23,7 +23,8 @@ class Client
         return $this->id;
     }
 
-    public function addContract(Contract $contract) {
+    public function addContract(Contract $contract)
+    {
         if ($contract->client->getId() !== $this->id) {
             throw new CanNotAddContractForOtherClientException();
         }
@@ -44,7 +45,8 @@ class Client
         return false;
     }
 
-    public function addAssessment(Assessment $assessment): self {
+    public function addAssessment(Assessment $assessment): self
+    {
         $this->assessments[$assessment->getStandard()->getId()->__toString()] = $assessment;
 
         return $this;

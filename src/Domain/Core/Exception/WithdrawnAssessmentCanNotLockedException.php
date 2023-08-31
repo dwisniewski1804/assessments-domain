@@ -6,5 +6,4 @@ use App\Domain\Shared\Exception\DomainException;
 
 class WithdrawnAssessmentCanNotLockedException extends DomainException
 {
-
 }

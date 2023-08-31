@@ -10,7 +10,8 @@ class Clock
         $this->date = $date;
     }
 
-    public function getDateTime(): \DateTimeImmutable {
+    public function getDateTime(): \DateTimeImmutable
+    {
         return $this->date;
     }
 }

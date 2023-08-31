@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class ClockTest extends TestCase
 {
-    public function testClockConstruct() {
+    public function testClockConstruct()
+    {
         $clock = new Clock(new \DateTimeImmutable('2022-10-10'));
 
         $this->assertEquals('2022-10-10', $clock->getDateTime()->format('Y-m-d'));

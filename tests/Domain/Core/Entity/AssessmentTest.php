@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Domain\Core\Entity;
 
 use App\Domain\Core\Entity\Assessment;
@@ -29,7 +30,8 @@ final class AssessmentTest extends TestCase
         $this->idGenerator = new IdGenerator();
     }
 
-    public function testAssessmentConstruct() {
+    public function testAssessmentConstruct()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -41,7 +43,8 @@ final class AssessmentTest extends TestCase
         $this->assertInstanceOf(Assessment::class, $assessment);
     }
 
-    public function testAssessmentConstructWithUnactiveContractShouldFail() {
+    public function testAssessmentConstructWithUnactiveContractShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -51,7 +54,8 @@ final class AssessmentTest extends TestCase
         new Assessment($this->idGenerator->generate(), $supervisor, $client, $standard, $clock);
     }
 
-    public function testAssessmentEvaluate() {
+    public function testAssessmentEvaluate()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -65,7 +69,8 @@ final class AssessmentTest extends TestCase
         $this->assertEquals($client->countAssessments(), 1);
     }
 
-    public function testAssessmentExpirationExceeded() {
+    public function testAssessmentExpirationExceeded()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -78,7 +83,8 @@ final class AssessmentTest extends TestCase
         $this->assertEquals(true, $assessment->isExpired());
     }
 
-    public function testAssessmentExpirationNotExceeded() {
+    public function testAssessmentExpirationNotExceeded()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -90,7 +96,8 @@ final class AssessmentTest extends TestCase
 
         $this->assertEquals(false, $assessment->isExpired());
     }
-    public function testAssessmentSuspend() {
+    public function testAssessmentSuspend()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -106,7 +113,8 @@ final class AssessmentTest extends TestCase
         $this->assertEquals("The reason for suspension.", $assessment->getLock()->getDescription());
     }
 
-    public function testAssessmentSuspendAgainShouldFail() {
+    public function testAssessmentSuspendAgainShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -123,7 +131,8 @@ final class AssessmentTest extends TestCase
         $assessment->lock(LockType::SUSPENDED, "The second reason for suspension.");
     }
 
-    public function testAssessmentSuspendAndThenWithdraw() {
+    public function testAssessmentSuspendAndThenWithdraw()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -140,7 +149,8 @@ final class AssessmentTest extends TestCase
         $this->assertEquals(LockType::WITHDRAWN, $assessment->getLock()->getType());
     }
 
-    public function testAssessmentWithdrawAndThenSuspendShouldFail() {
+    public function testAssessmentWithdrawAndThenSuspendShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -157,7 +167,8 @@ final class AssessmentTest extends TestCase
         $assessment->lock(LockType::SUSPENDED, "The reason for suspension.");
     }
 
-    public function testAssessmentWithdrawAndThenUnlockShouldFail() {
+    public function testAssessmentWithdrawAndThenUnlockShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -174,7 +185,8 @@ final class AssessmentTest extends TestCase
         $assessment->unlock();
     }
 
-    public function testAssessmentWithdrawAndThenUnlockAndThenLock() {
+    public function testAssessmentWithdrawAndThenUnlockAndThenLock()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -191,7 +203,8 @@ final class AssessmentTest extends TestCase
 
     }
 
-    public function testExpiredAssessmentLockShouldFail() {
+    public function testExpiredAssessmentLockShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -206,7 +219,8 @@ final class AssessmentTest extends TestCase
         $assessment->lock(LockType::WITHDRAWN, "The reason for widthdraw.");
     }
 
-    public function testAssessmentLockWithoutDescriptionShouldFail() {
+    public function testAssessmentLockWithoutDescriptionShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -221,7 +235,8 @@ final class AssessmentTest extends TestCase
         $assessment->lock(LockType::WITHDRAWN);
     }
 
-    public function testAssessmentEvaluatePositiveAgainIn220Days() {
+    public function testAssessmentEvaluatePositiveAgainIn220Days()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -236,7 +251,8 @@ final class AssessmentTest extends TestCase
         $this->assertInstanceOf(Assessment::class, $assessment);
     }
 
-    public function testAssessmentEvaluatePositiveAgainIn170DaysShouldFail() {
+    public function testAssessmentEvaluatePositiveAgainIn170DaysShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -252,7 +268,8 @@ final class AssessmentTest extends TestCase
         $assessment->evaluate(new Rating(3));
     }
 
-    public function testAssessmentEvaluateNegativeAgainIn32Days() {
+    public function testAssessmentEvaluateNegativeAgainIn32Days()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -267,7 +284,8 @@ final class AssessmentTest extends TestCase
         $this->assertInstanceOf(Assessment::class, $assessment);
     }
 
-    public function testAssessmentEvaluateNegativeAgainIn29DaysShouldFail() {
+    public function testAssessmentEvaluateNegativeAgainIn29DaysShouldFail()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');

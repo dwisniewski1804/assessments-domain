@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Domain\Core\Entity;
 
 use App\Domain\Core\Entity\Assessment;
@@ -21,7 +22,8 @@ final class ClientTest extends TestCase
         $this->idGenerator = new IdGenerator();
     }
 
-    public function testClientConstruct() {
+    public function testClientConstruct()
+    {
         $id = $this->idGenerator->generate();
 
         $client = new Client($id);
@@ -29,7 +31,8 @@ final class ClientTest extends TestCase
         $this->assertInstanceOf(Client::class, $client);
     }
 
-    public function testClientAddContractFromClientShouldFail() {
+    public function testClientAddContractFromClientShouldFail()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
@@ -41,7 +44,8 @@ final class ClientTest extends TestCase
         $client->addContract($contract);
     }
 
-    public function testClientAddContractThatIsOwnedByHim() {
+    public function testClientAddContractThatIsOwnedByHim()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
@@ -52,7 +56,8 @@ final class ClientTest extends TestCase
         $this->assertEquals(1, $client->countContracts());
     }
 
-    public function testClientHasActiveContract() {
+    public function testClientHasActiveContract()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
@@ -63,7 +68,8 @@ final class ClientTest extends TestCase
         $this->assertEquals(true, $client->hasActiveContractWith($supervisor));
     }
 
-    public function testClientDoesNotHaveActiveContract() {
+    public function testClientDoesNotHaveActiveContract()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($this->idGenerator->generate());
         $otherSupervisor = new Supervisor($this->idGenerator->generate());
@@ -75,7 +81,8 @@ final class ClientTest extends TestCase
         $this->assertEquals(false, $client->hasActiveContractWith($otherSupervisor));
     }
 
-    public function testClientAddAssessment() {
+    public function testClientAddAssessment()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -88,7 +95,8 @@ final class ClientTest extends TestCase
         $this->assertEquals(1, $client->countAssessments());
     }
 
-    public function testClientAddAssessmentWithTheSameStandard() {
+    public function testClientAddAssessmentWithTheSameStandard()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -102,7 +110,8 @@ final class ClientTest extends TestCase
         $this->assertEquals(1, $client->countAssessments());
     }
 
-    public function testClientAddAssessmentWithTheOtherStandard() {
+    public function testClientAddAssessmentWithTheOtherStandard()
+    {
         $supervisor = new Supervisor($this->idGenerator->generate());
         $client = new Client($this->idGenerator->generate());
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');

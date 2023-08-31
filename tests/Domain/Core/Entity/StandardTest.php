@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Domain\Core\Entity;
 
 use App\Domain\Core\Entity\Standard;
@@ -15,7 +16,8 @@ final class StandardTest extends TestCase
         $this->idGenerator = new IdGenerator();
     }
 
-    public function testStandardConstruct() {
+    public function testStandardConstruct()
+    {
         $id = $this->idGenerator->generate();
         $standard = new Standard($id, 'Example standard');
 

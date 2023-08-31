@@ -14,7 +14,8 @@ class Supervisor
         $this->id = $id;
     }
 
-    public function hasAuthorityFor(Standard $standard): bool {
+    public function hasAuthorityFor(Standard $standard): bool
+    {
         return array_key_exists($standard->id->__toString(), $this->authorities);
     }
 

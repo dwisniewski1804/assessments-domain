@@ -9,7 +9,8 @@ class Standard
     public readonly Uuid $id;
     private string $name;
 
-    public function __construct(Uuid $id, string $name) {
+    public function __construct(Uuid $id, string $name)
+    {
         $this->id = $id;
         $this->name = $name;
     }

@@ -26,7 +26,7 @@ class Assessment
     private readonly \DateTimeImmutable $date;
     private ?Lock $lock = null;
 
-    const EXPIRATION_DAYS = 365;
+    public const EXPIRATION_DAYS = 365;
     private const NEGATIVE_DAYS = 30;
     private const POSITIVE_DAYS = 180;
     public function __construct(
@@ -37,7 +37,7 @@ class Assessment
         Clock $date
     ) {
         if (!$client->hasActiveContractWith($supervisor)) {
-            throw new ClientDoesNotHaveActiveContractWithSupervisorException;
+            throw new ClientDoesNotHaveActiveContractWithSupervisorException();
         }
         $this->id = $id;
         $this->supervisor = $supervisor;
@@ -47,11 +47,12 @@ class Assessment
         $this->client->addAssessment($this);
     }
 
-    public function lock(LockType $type, string $description): self {
+    public function lock(LockType $type, string $description): self
+    {
         $lock = new Lock($type, $description);
 
         if ($type === LockType::SUSPENDED && $this->lock && $this->lock->getType() === LockType::SUSPENDED) {
-            throw new AssessmentAlreadyLockedException;
+            throw new AssessmentAlreadyLockedException();
         }
 
         if ($this->lock && $this->lock->getType() === LockType::WITHDRAWN) {
@@ -59,7 +60,7 @@ class Assessment
         }
 
         if ($this->isExpired()) {
-            throw new ExpiredAssessmentCanNotBeLockedException;
+            throw new ExpiredAssessmentCanNotBeLockedException();
         }
 
         $this->lock = $lock;
@@ -67,22 +68,24 @@ class Assessment
         return $this;
     }
 
-    public function unlock() {
-       if ($this->lock->getType() === LockType::WITHDRAWN) {
-           throw new WithdrawnAssessmentCanNotBeUnlockedException();
-       }
+    public function unlock()
+    {
+        if ($this->lock->getType() === LockType::WITHDRAWN) {
+            throw new WithdrawnAssessmentCanNotBeUnlockedException();
+        }
 
-       $this->lock = null;
+        $this->lock = null;
     }
 
-    public function evaluate(Rating $rating) {
+    public function evaluate(Rating $rating)
+    {
 
         if ($this->canEvaluateAfter() > new \DateTime()) {
             throw new CanNotEvaluateDueToTimeAfterRulesException(self::NEGATIVE_DAYS, self::POSITIVE_DAYS);
         }
 
         if (!$this->supervisor->hasAuthorityFor($this->standard)) {
-            throw new SupervisorDoesNotHaveAuthorityException;
+            throw new SupervisorDoesNotHaveAuthorityException();
         }
 
         $this->rating = $rating;
@@ -90,7 +93,8 @@ class Assessment
         $this->client->addAssessment($this);
     }
 
-    private function canEvaluateAfter(): \DateTimeImmutable {
+    private function canEvaluateAfter(): \DateTimeImmutable
+    {
         if (isset($this->rating)) {
             if ($this->rating->isPositive()) {
                 return (clone $this->date)->modify('+' . self::POSITIVE_DAYS . ' days');
@@ -101,7 +105,8 @@ class Assessment
         return new \DateTimeImmutable();
     }
 
-    public function isExpired(): bool {
+    public function isExpired(): bool
+    {
         $expirationDate = new \DateTime($this->date->format('Y-m-d H:i:s'));
         $expirationDate->modify('+' . self::EXPIRATION_DAYS . ' days');
 

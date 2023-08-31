@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests\Domain\Core\Entity;
 
 use App\Domain\Core\Entity\Standard;
@@ -16,14 +17,16 @@ final class SupervisorTest extends TestCase
         $this->idGenerator = new IdGenerator();
     }
 
-    public function testSupervisorConstruct() {
+    public function testSupervisorConstruct()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($id);
 
         $this->assertInstanceOf(Supervisor::class, $supervisor);
     }
 
-    public function testSupervisorAddAuthorityAndCheck() {
+    public function testSupervisorAddAuthorityAndCheck()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($id);
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');
@@ -33,7 +36,8 @@ final class SupervisorTest extends TestCase
         $this->assertEquals(true, $supervisor->hasAuthorityFor($standard));
     }
 
-    public function testSupervisorCheckAuthorityWithoutAddingIt() {
+    public function testSupervisorCheckAuthorityWithoutAddingIt()
+    {
         $id = $this->idGenerator->generate();
         $supervisor = new Supervisor($id);
         $standard = new Standard($this->idGenerator->generate(), 'Example standard');

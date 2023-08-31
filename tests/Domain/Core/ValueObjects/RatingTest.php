@@ -8,27 +8,32 @@ use PHPUnit\Framework\TestCase;
 
 class RatingTest extends TestCase
 {
-    public function testRatingConstruct() {
+    public function testRatingConstruct()
+    {
         $rating = new Rating(5);
         $this->assertEquals(5, $rating->getValue());
     }
 
-    public function testRatingConstructWithLowerValue() {
+    public function testRatingConstructWithLowerValue()
+    {
         $this->expectException(RatingOutOfRangeException::class);
         new Rating(-15);
     }
 
-    public function testRatingConstructWithHigherValue() {
+    public function testRatingConstructWithHigherValue()
+    {
         $this->expectException(RatingOutOfRangeException::class);
         new Rating(15);
     }
 
-    public function testRatingPositive() {
+    public function testRatingPositive()
+    {
         $rating = new Rating(5);
         $this->assertEquals(true, $rating->isPositive());
     }
 
-    public function testRatingNotPositive() {
+    public function testRatingNotPositive()
+    {
         $rating = new Rating(-5);
         $this->assertEquals(false, $rating->isPositive());
     }
