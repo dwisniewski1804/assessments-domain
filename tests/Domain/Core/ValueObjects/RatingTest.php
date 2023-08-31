@@ -22,4 +22,14 @@ class RatingTest extends TestCase
         $this->expectException(RatingOutOfRangeException::class);
         new Rating(15);
     }
+
+    public function testRatingPositive() {
+        $rating = new Rating(5);
+        $this->assertEquals(true, $rating->isPositive());
+    }
+
+    public function testRatingNotPositive() {
+        $rating = new Rating(-5);
+        $this->assertEquals(false, $rating->isPositive());
+    }
 }

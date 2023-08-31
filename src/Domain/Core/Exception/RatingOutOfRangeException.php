@@ -10,6 +10,6 @@ class RatingOutOfRangeException extends DomainException
 
     public function __construct(int $min, int $max)
     {
-        parent::__construct($this->message);
+        parent::__construct($this->message. "Min is $min and max is: $max");
     }
 }
